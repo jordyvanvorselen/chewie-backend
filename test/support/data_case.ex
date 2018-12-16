@@ -1,4 +1,6 @@
 defmodule Chewie.DataCase do
+  alias Ecto.Adapters.SQL.Sandbox
+
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -26,10 +28,10 @@ defmodule Chewie.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Chewie.Repo)
+    :ok = Sandbox.checkout(Chewie.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Chewie.Repo, {:shared, self()})
+      Sandbox.mode(Chewie.Repo, {:shared, self()})
     end
 
     :ok

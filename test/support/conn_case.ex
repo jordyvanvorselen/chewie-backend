@@ -1,4 +1,6 @@
 defmodule ChewieWeb.ConnCase do
+  alias Ecto.Adapters.SQL.Sandbox
+
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -27,10 +29,10 @@ defmodule ChewieWeb.ConnCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Chewie.Repo)
+    :ok = Sandbox.checkout(Chewie.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Chewie.Repo, {:shared, self()})
+      Sandbox.mode(Chewie.Repo, {:shared, self()})
     end
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
